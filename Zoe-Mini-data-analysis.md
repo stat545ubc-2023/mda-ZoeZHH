@@ -516,7 +516,9 @@ number of units and number of storeys in most of apartments? Question 3:
 How many apartments have “central_air” air conditioning? What’s the
 proportion of it over all apartments? Question 4: Is there a positive
 relationship between number of units and number of elevators in most of
-apartments? <!----------------------------->
+apartments? 
+
+<!----------------------------->
 
 # Overall reproducibility/Cleanliness/Coherence Checklist
 
