@@ -1,6 +1,0 @@
-"0","# Choice 3: Explore the relationship between 2 variables in a plot - I want to explore the relationship between year built and no_of_units"
-"0","choice3 <- apt_buildings %>% "
-"0","  filter(!is.na(no_of_units) & !is.na(year_built)) %>%"
-"0","  ggplot(aes(x=year_built, y=no_of_units)) + "
-"0","  geom_point() "
-"0","print(choice3)"

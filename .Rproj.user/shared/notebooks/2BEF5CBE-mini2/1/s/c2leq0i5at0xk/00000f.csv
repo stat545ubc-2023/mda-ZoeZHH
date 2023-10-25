@@ -1,3 +1,0 @@
-"0","# Extract and print regression coefficients for predictions on Y"
-"0","coefficients <- tidy(model1)"
-"0","print(coefficients)"

@@ -1,8 +1,0 @@
-"0","# Option 1:"
-"0","q4 <- apt_buildings %>%"
-"0","  summarise(min_units = min(no_of_units),"
-"0","    max_units = max(no_of_units),"
-"0","    mean_units = mean(no_of_units),"
-"0","    median_units = median(no_of_units),"
-"0","    sd_units = sd(no_of_units))"
-"0","head (q4)"
