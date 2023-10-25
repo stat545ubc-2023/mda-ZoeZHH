@@ -247,7 +247,7 @@ Question 1: How does the building built year in relate to its air
 conditioning type?
 
 ``` r
-# Option 3: Create a categorical variable with 3 or more groups from the existing 'year_registered' numerical variable: "Before 1980", "1980-2000", "After 2000".
+# Option 3: Create a categorical variable with 3 or more groups from the existing 'year_built' numerical variable: "Before 1970", "1970-2000", "After 2000".
 q1 <- apt_buildings %>%
   mutate(built_era = case_when(
     year_built < 1970 ~ "Old",
@@ -943,7 +943,7 @@ file in your `output` folder. Use the `here::here()` function.
 getwd()
 ```
 
-    ## [1] "/Users/zoe/mda-ZoeZHH"
+    ## [1] "/Users/zoe/mda-ZoeZHH/Milestone 2"
 
 ``` r
 write.csv(q1, "/Users/zoe/mda-ZoeZHH/output/summary_building_year_vs_air_conditioning.csv")
