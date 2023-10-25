@@ -1,4 +1,3 @@
 # mda-project-template
-This repository is for Zoe Zhang's mini-data analysis project
-
-You can check my updated version of the project there, called Mini-data Analysis 1
+This folder contains the source code for Milestone 1. 
+There is an.RMD file, a knitted .md file and the figures for .md file.
