@@ -1,0 +1,7 @@
+"0","# Option 4: Compute the proportion and counts in each category of one categorical variable across the groups of another categorical variable from your data."
+"0","q3 <- apt_buildings %>%"
+"0","  group_by(year_built, property_type) %>%"
+"0","  summarise(count = n()) %>%"
+"0","  mutate(proportion = count / sum(count))"
+"2","`summarise()` has grouped output by 'year_built'. You can override using the `.groups` argument."
+"0","print(q3)"

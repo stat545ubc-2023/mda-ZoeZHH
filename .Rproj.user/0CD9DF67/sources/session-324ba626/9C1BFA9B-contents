@@ -1,0 +1,492 @@
+---
+title: "Mini Data Analysis Milestone 2"
+output: html_document
+---
+
+*To complete this milestone, you can either edit [this `.rmd` file](https://raw.githubusercontent.com/UBC-STAT/stat545.stat.ubc.ca/master/content/mini-project/mini-project-2.Rmd) directly. Fill in the sections that are commented out with `<!--- start your work here--->`. When you are done, make sure to knit to an `.md` file by changing the output in the YAML header to `github_document`, before submitting a tagged release on canvas.*
+
+# Welcome to the rest of your mini data analysis project!
+
+In Milestone 1, you explored your data. and came up with research questions. This time, we will finish up our mini data analysis and obtain results for your data by: 
+
+- Making summary tables and graphs 
+- Manipulating special data types in R: factors and/or dates and times.
+-   Fitting a model object to your data, and extract a result.
+-   Reading and writing data as separate files.
+
+We will also explore more in depth the concept of *tidy data.* 
+
+**NOTE**: The main purpose of the mini data analysis is to integrate what you learn in class in an analysis. Although each milestone provides a framework for you to conduct your analysis, it's possible that you might find the instructions too rigid for your data set. If this is the case, you may deviate from the instructions -- just make sure you're demonstrating a wide range of tools and techniques taught in this class.
+
+# Instructions
+
+**To complete this milestone**, edit [this very `.Rmd` file](https://raw.githubusercontent.com/UBC-STAT/stat545.stat.ubc.ca/master/content/mini-project/mini-project-2.Rmd) directly. Fill in the sections that are tagged with `<!--- start your work here--->`.
+
+**To submit this milestone**, make sure to knit this `.Rmd` file to an `.md` file by changing the YAML output settings from `output: html_document` to `output: github_document`. Commit and push all of your work to your mini-analysis GitHub repository, and tag a release on GitHub. Then, submit a link to your tagged release on canvas.
+
+**Points**: This milestone is worth 50 points: 45 for your analysis, and 5 for overall reproducibility, cleanliness, and coherence of the Github submission. 
+
+**Research Questions**: In Milestone 1, you chose two research questions to focus on. Wherever realistic, your work in this milestone should relate to these research questions whenever we ask for justification behind your work. In the case that some tasks in this milestone don't align well with one of your research questions, feel free to discuss your results in the context of a different research question.
+
+# Learning Objectives
+
+By the end of this milestone, you should:
+
+-   Understand what *tidy* data is, and how to create it using `tidyr`.
+-   Generate a reproducible and clear report using R Markdown.
+-   Manipulating special data types in R: factors and/or dates and times.
+-   Fitting a model object to your data, and extract a result.
+-   Reading and writing data as separate files.
+
+# Setup
+
+Begin by loading your data and the tidyverse package below:
+
+```{r, message = FALSE}
+library(datateachr) # <- might contain the data you picked!
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(broom)
+library(here)
+```
+
+# Task 1: Process and summarize your data 
+
+From milestone 1, you should have an idea of the basic structure of your dataset (e.g. number of rows and columns, class types, etc.). Here, we will start investigating your data more in-depth using various data manipulation functions. 
+
+### 1.1 (1 point) 
+
+First, write out the 4 research questions you defined in milestone 1 were. This will guide your work through milestone 2:
+
+<!-------------------------- Start your work below ---------------------------->
+1. How does the building built year in relate to its air conditioning type?
+2. Is there a positive relationship between number of units and number of storeys in most of apartments?
+3. How many of each property type were built each year?
+4. What is the distribution of the number of units in apartment buildings in Vancouver?
+<!----------------------------------------------------------------------------->
+
+Here, we will investigate your data using various data manipulation and graphing functions.
+
+### 1.2 (8 points)
+
+Now, for each of your four research questions, choose one task from options 1-4 (summarizing), and one other task from 4-8 (graphing). You should have 2 tasks done for each research question (8 total). Make sure it makes sense to do them! (e.g. don't use a numerical variables for a task that needs a categorical variable.). Comment on why each task helps (or doesn't!) answer the corresponding research question.
+
+Ensure that the output of each operation is printed!
+
+Also make sure that you're using dplyr and ggplot2 rather than base R. Outside of this project, you may find that you prefer using base R functions for certain tasks, and that's just fine! But part of this project is for you to practice the tools we learned in class, which is dplyr and ggplot2.
+
+**Summarizing:**
+
+1.  Compute the *range*, *mean*, and *two other summary statistics* of **one numerical variable** across the groups of **one categorical variable** from your data.
+2.  Compute the number of observations for at least one of your categorical variables. Do not use the function `table()`!
+3.  Create a categorical variable with 3 or more groups from an existing numerical variable. You can use this new variable in the other tasks! *An example: age in years into "child, teen, adult, senior".*
+4. Compute the proportion and counts in each category of one categorical variable across the groups of another categorical variable from your data. Do not use the function `table()`!
+
+**Graphing:**
+
+6. Create a graph of your choosing, make one of the axes logarithmic, and format the axes labels so that they are "pretty" or easier to read.
+7. Make a graph where it makes sense to customize the alpha transparency.
+
+Using variables and/or tables you made in one of the "Summarizing" tasks: 
+
+8. Create a graph that has at least two geom layers. 
+9. Create 3 histograms, with each histogram having different sized bins. Pick the "best" one and explain why it is the best.
+
+Make sure it's clear what research question you are doing each operation for!
+
+<!------------------------- Start your work below ----------------------------->
+```{r}
+glimpse(apt_buildings)
+head(apt_buildings)
+```
+
+Question 1: How does the building built year in relate to its air conditioning type?
+```{r}
+# Option 3: Create a categorical variable with 3 or more groups from the existing 'year_registered' numerical variable: "Before 1980", "1980-2000", "After 2000".
+q1 <- apt_buildings %>%
+  mutate(built_era = case_when(
+    year_built < 1970 ~ "Old",
+    year_built >= 1970 & year_built < 2000 ~ "Mid-Range",
+    year_built >= 2000 ~ "Recent",
+    TRUE ~ "Unknown"  # for any missing or inconsistent data
+  ))
+head (q1)
+# Option 8: Create a graph that has at least two geom layers
+ggplot(q1, aes(x = air_conditioning, y = year_built)) +
+  geom_density(aes(y = after_stat(scaled))) +
+  geom_boxplot(width = 0.25, outlier.size = 2) + 
+  labs(title = "Building Year by Air Conditioning Type",
+       x = "Air Conditioning Type",
+       y = "Year Built") +
+  theme_minimal() +
+  ylim(1900, max(q1$year_built))
+# Comments on summarizing: By separating building built year into different groups, help us to check the table for what kinds of air conditioning type related to built year. However, it didn't answer the corresponding research question clearly, which requires further analysis due to a bunch of observations in the dataset. 
+# Comments on graphing: The figure gives a visualization on the question, we can see that the modern apartments prefer the central air as the type of air conditioning. The figure provides useful information for the question.
+```
+
+Question 2: Is there any relationship between number of units and number of storeys in most of apartments?
+```{r}
+# Option 1: Summarizing the number of units across the groups of the number of storeys.
+q2 <- apt_buildings %>%
+  group_by(no_of_storeys) %>%
+  summarise(min_units = min(no_of_units),
+    max_units = max(no_of_units),
+    mean_units = mean(no_of_units),
+    median_units = median(no_of_units),
+    sd_units = sd(no_of_units))
+head(q2)
+# Filtering the data
+apt_buildings <- apt_buildings %>% 
+  filter(no_of_units <= 1000)
+# Option 8: Create a graph with scatter plot and regression line.
+ggplot(data = apt_buildings, aes(x = no_of_units, y = no_of_storeys, color = no_of_storeys)) +
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE, color = "orange") +
+  labs(title = "Relationship between Number of Units and Number of Storeys",
+    x = "Number of Units",
+    y = "Number of Storeys") +
+  theme_minimal()
+# Comments on summarizing: By checking min/max/mean/median/sd values on no_of_units based on different groups of no_of_storeys, do give us useful information on a positive relationship between no_of_storeys and mean_units.
+# Comments on graphing: The figure further proved the positive relationship between no_of_units and no_of_storeys. These tasks help answer my research question.
+```
+
+Question 3: How many of each property type were built each year?
+```{r}
+# Option 4: Compute the proportion and counts in each category of one categorical variable across the groups of another categorical variable from your data.
+q3 <- apt_buildings %>%
+  group_by(year_built, property_type) %>%
+  summarise(count = n()) %>%
+  mutate(proportion = count / sum(count))
+print(q3)
+# Option 8: Create a graph that has at least two geom layers.
+ggplot(q3, aes(x = year_built, y = count, fill = property_type)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  geom_line(aes(group = property_type, color = property_type), size = 1) +
+  labs(title = "Number of Each Property Type Built Each Year",
+       x = "Year Built",
+       y = "Number of Properties") +
+  theme_minimal()
+
+# Comments on summarizing: group property_type and compute the proportion for different groups of year_built, prepare for the graphing.
+# Comments on graphing: The figure provides a visual representation of the trend, with private housing built the most around 1960, more social house around 1990. These tasks do provide useful information to the research question, but need to think other ways to better understand. Histogram with count number for each type of property type could be more useful.
+```
+
+
+Question 4: What is the distribution of the number of units in apartment buildings in Vancouver?
+```{r}
+# Option 1:
+q4 <- apt_buildings %>%
+  summarise(min_units = min(no_of_units),
+    max_units = max(no_of_units),
+    mean_units = mean(no_of_units),
+    median_units = median(no_of_units),
+    sd_units = sd(no_of_units))
+head (q4)
+# Option 9:
+# Histogram with small bin width
+bin1 <- ggplot(apt_buildings, aes(x = no_of_units)) +
+  geom_histogram(binwidth = 5) +
+  labs(title = "Number of Units (Small Bins)",
+       x = "Number of Units",
+       y = "Count") +
+  theme_minimal()
+# Histogram with medium bin width
+bin2 <- ggplot(apt_buildings, aes(x = no_of_units)) +
+  geom_histogram(binwidth = 50) +
+  labs(title = "Number of Units (Medium Bins)",
+       x = "Number of Units",
+       y = "Count") +
+  theme_minimal()
+# Histogram with large bin width
+bin3 <- ggplot(apt_buildings, aes(x = no_of_units)) +
+  geom_histogram(binwidth = 100) +
+  labs(title = "Number of Units (Large Bins)",
+       x = "Number of Units",
+       y = "Count") +
+  theme_minimal()
+
+print(bin1)
+print(bin2)
+print(bin3)
+# The large bin, bin 3 is the most suitable 1 for this question, because it's easily see that most of apartments in Vancouver has units number less than 50! Too small bin makes it hard to track the range.
+
+# Comments on summarizing: by giving min/min/mean/median/sd values of no of units, we get the idea of the general information, distribution on no of units in Vancouver.
+# Comments on graphing: Histograms provide us the distribution of different ranges of no of units, with most apartments have no_of_units smaller than 50. The graphing do answer the research question clearly.
+```
+
+
+<!----------------------------------------------------------------------------->
+
+### 1.3 (2 points)
+
+Based on the operations that you've completed, how much closer are you to answering your research questions? Think about what aspects of your research questions remain unclear. Can your research questions be refined, now that you've investigated your data a bit more? Which research questions are yielding interesting results?
+
+<!------------------------- Write your answer here ---------------------------->
+Question 1: How does the building built year in relate to its air conditioning type?
+By creating categorical variable to seperate the buildings based on their built year. The summarizing didn't answer the corresponding research question clearly, which requires further analysis but the figure gives a visualization on the question. The plot gives an idea about the distribution of buildings with different air conditioning types based on their year of construction. We can see that the newer apartments prefer the central air as the type of air conditioning. 
+
+Question 2: Is there a positive relationship between number of units and number of storeys in most of apartments? 
+The summary statistics show the distribution of the number of units across various storeys, and the plot indicates a trend. It seems have a positive trend between the number of units and the number of storeys, but outliers and data concentration need more investigation. These tasks provide valuable insights to my research question.
+
+Question 3: How many of each property type were built each year?
+By grouping property_type and compute the proportion for different groups of year_built, which gives a foundational preparation for graphing the trend.The figure provides a visual representation of the trend, with private housing built the most around 1960, more social house around 1990. These tasks do provide useful information to the research question, but need to think other ways to prensent to better resolve the question. Histograms with count number for each type of property type could be the better options.
+
+Question 4: What is the distribution of the number of units in apartment buildings in Vancouver? 
+Through the analysis, we've gained insight into Vancouver's apartment unit distribution generally. The histograms provide us the distribution of different ranges of no of units. However, exploring the correlation between unit size and other factors might offer more depth.
+<!----------------------------------------------------------------------------->
+
+# Task 2: Tidy your data 
+
+In this task, we will do several exercises to reshape our data. The goal here is to understand how to do this reshaping with the `tidyr` package.
+
+A reminder of the definition of *tidy* data:
+
+-   Each row is an **observation**
+-   Each column is a **variable**
+-   Each cell is a **value**
+
+### 2.1 (2 points)
+
+Based on the definition above, can you identify if your data is tidy or untidy? Go through all your columns, or if you have \>8 variables, just pick 8, and explain whether the data is untidy or tidy.
+
+<!--------------------------- Start your work below --------------------------->
+Tidy depends on the data analysis plan. And since my chosen dataset *apt_buildings* have 37 columns, I would like to narrow down to 8 variables most relate to my above research questions and answer this tidy question. 
+```{r}
+apt_subset <- apt_buildings %>%
+  select(id, year_built, property_type, air_conditioning, barrier_free_accessibilty_entr, no_of_elevators, no_of_units, no_of_storeys)
+head(apt_subset)
+glimpse (apt_subset)
+```
+Answer: Overall, I think my dataset *apt_subset* is tidy. Each row represents a unique apartment building, makes it an observation. Each column is a variable, represents distinct attributes of the apartment building. And each cell contains a singular value that is relevant to the corresponding variable.
+
+However, tidy depends on the data analysis plan. It may not tidy based on what kinds of research questions do I got? Let's go through each research question and column:
+
+1. How does the building built year in relate to its air conditioning type?
+*year_built*: Year each building was constructed. 
+*air_conditioning*: Indicates if the building has air conditioning (e.g., NONE). This is tidy to answer my research question between year_built and air_conditioning type. 
+
+2. Is there a positive relationship between number of units and number of storeys in most of apartments?
+*no_of_units*: The number of units in each building. 
+*no_of_storeys*: The number of storeys in each building. 
+This is tidy to build relationships between no_of_units and no_of_storeys.
+
+3. How many of each property type were built each year?
+*year_built*:Year each building was constructed.
+*property_type*: Indicates the type of property.
+This isn't tidy, we should have each unique year as a row, each property type as a column, and the counts of properties built of each type in each year as the values for a tidy dataset.
+
+4. What is the distribution of the number of units in apartment buildings in Vancouver?
+*id* represents each apartment's id and *no_of_units* represents The number of units in each building. This is tidy for analyzing the question.
+<!----------------------------------------------------------------------------->
+
+### 2.2 (4 points)
+
+Now, if your data is tidy, untidy it! Then, tidy it back to it's original state.
+
+If your data is untidy, then tidy it! Then, untidy it back to it's original state.
+
+Be sure to explain your reasoning for this task. Show us the "before" and "after".
+
+<!--------------------------- Start your work below --------------------------->
+I'll answer this question by solving untidy state of question 3 mentioned above, How many of each property type were built each year? 
+```{r}
+# Before: tidy the dataset to answer: How many of each property type were built each year?
+property_count_by_year <- apt_subset %>%
+  group_by(year_built, property_type) %>%
+  summarise(count = n()) %>%
+  pivot_wider(names_from = property_type, values_from = count, values_fill = 0)
+print(property_count_by_year)
+# Comments: By using pivot_wider,having each unique year as a row, each property type as a column, and the counts of properties built of each type in each year as the values is more useful for us to answer the research question.
+
+# After: untidy the dataset
+original_data <- property_count_by_year %>%
+  pivot_longer(
+    cols = -year_built, 
+    names_to = "property_type", 
+    values_to = "count"
+  ) %>%
+  ungroup()
+print(original_data)
+```
+
+<!----------------------------------------------------------------------------->
+
+### 2.3 (4 points)
+
+Now, you should be more familiar with your data, and also have made progress in answering your research questions. Based on your interest, and your analyses, pick 2 of the 4 research questions to continue your analysis in the remaining tasks:
+
+<!-------------------------- Start your work below ---------------------------->
+
+1.  How many of each property type were built each year? 
+2.  Is there any relationship between number of units and number of storeys in most of apartments?
+
+<!----------------------------------------------------------------------------->
+
+Explain your decision for choosing the above two research questions.
+
+<!--------------------------- Start your work below --------------------------->
+To answer 1) How many of each property type were built each year?, it allows you to understand historical development pattern (visualize how different types of properties have gained or lost popularity over time) and identify current trends (able to understand the current demand and supply for different property types); To answer 2) Is there any relationship between number of units and number of storeys in most of apartments?, it helps with optimize building designs (survey the typical ratio of units to storeys, help with design more efficient buildings) and predict the infrastructure load (data can better predict infrastructure loads).
+<!----------------------------------------------------------------------------->
+
+Now, try to choose a version of your data that you think will be appropriate to answer these 2 questions. Use between 4 and 8 functions that we've covered so far (i.e. by filtering, cleaning, tidy'ing, dropping irrelevant columns, etc.).
+
+(If it makes more sense, then you can make/pick two versions of your data, one for each research question.) 
+
+<!--------------------------- Start your work below --------------------------->
+For this question, I'll start with the dataset *apt_subset* that already applied the select function by me, see 2.1. And based on my explanations for the previous question, two versions of data for each research question is more suitable here.
+
+Q1: How many of each property type were built each year? 
+select(): Choose the columns we're interested in.
+group_by(): Group data by certain columns.
+summarise(): Aggregate data.
+pivot_wider(): Pivot the data from long to wide format.
+arrange(): Sort the dataset.
+```{r}
+data_q1 <- apt_subset %>%
+  select(year_built, property_type) %>%  
+  group_by(year_built, property_type) %>%  
+  summarise(count = n()) %>% 
+  pivot_wider(names_from = property_type, values_from = count, values_fill = 0) %>% 
+  arrange(year_built) 
+print(data_q1)
+```
+Q2: Is there any relationship between number of units and number of storeys in most of apartments?
+select(): Choose the columns we're interested in.
+filter(): Remove rows based on certain criteria.
+mutate(): Create or modify columns.
+arrange(): Sort the dataset.
+```{r}
+data_q2 <- apt_subset %>%
+  select(no_of_units, no_of_storeys, property_type) %>%  
+  filter(property_type %in% c("PRIVATE", "SOCIAL HOUSING")) %>% 
+  mutate(average_units_per_storey = no_of_units / no_of_storeys) %>% 
+  filter(between(no_of_units, 5, 500), 
+         between(no_of_storeys, 1, 50)) %>%  
+  arrange(desc(average_units_per_storey)) 
+print(data_q2)
+```
+
+# Task 3: Modelling
+
+## 3.0 (no points)
+
+Pick a research question from 1.2, and pick a variable of interest (we'll call it "Y") that's relevant to the research question. Indicate these.
+
+<!-------------------------- Start your work below ---------------------------->
+(I used data_q2 dataset from 2.3 in the modelling section)
+
+**Research Question**: Is there any relationship between number of units and number of storeys in most of apartments?
+
+**Variable of interest**: average_units_per_storey
+
+<!----------------------------------------------------------------------------->
+
+## 3.1 (3 points)
+
+Fit a model or run a hypothesis test that provides insight on this variable with respect to the research question. Store the model object as a variable, and print its output to screen. We'll omit having to justify your choice, because we don't expect you to know about model specifics in STAT 545.
+
+-   **Note**: It's OK if you don't know how these models/tests work. Here are some examples of things you can do here, but the sky's the limit.
+
+    -   You could fit a model that makes predictions on Y using another variable, by using the `lm()` function.
+    -   You could test whether the mean of Y equals 0 using `t.test()`, or maybe the mean across two groups are different using `t.test()`, or maybe the mean across multiple groups are different using `anova()` (you may have to pivot your data for the latter two).
+    -   You could use `lm()` to test for significance of regression coefficients.
+
+<!-------------------------- Start your work below ---------------------------->
+```{r}
+# Fit a linear regression model
+model1 <- lm(average_units_per_storey ~ no_of_storeys, data=data_q2)
+
+# Print the model summary
+summary(model1)
+```
+
+<!----------------------------------------------------------------------------->
+
+## 3.2 (3 points)
+
+Produce something relevant from your fitted model: either predictions on Y, or a single value like a regression coefficient or a p-value.
+
+-   Be sure to indicate in writing what you chose to produce.
+-   Your code should either output a tibble (in which case you should indicate the column that contains the thing you're looking for), or the thing you're looking for itself.
+-   Obtain your results using the `broom` package if possible. If your model is not compatible with the broom function you're needing, then you can obtain your results by some other means, but first indicate which broom function is not compatible.
+
+<!-------------------------- Start your work below ---------------------------->
+```{r}
+# Extract and print regression coefficients for predictions on Y
+coefficients <- tidy(model1)
+print(coefficients)
+# Findings: estimate gives the estimated coefficient for the predictor and p.value gives the significance of the predictor. The small p-value (2.558212e-41) suggests that the predictor is statistically significant in predicting the response variable.
+```
+<!----------------------------------------------------------------------------->
+
+# Task 4: Reading and writing data
+
+Get set up for this exercise by making a folder called `output` in the top level of your project folder / repository. You'll be saving things there.
+
+## 4.1 (3 points)
+
+Take a summary table that you made from Task 1, and write it as a csv file in your `output` folder. Use the `here::here()` function.
+
+-   **Robustness criteria**: You should be able to move your Mini Project repository / project folder to some other location on your computer, or move this very Rmd file to another location within your project repository / folder, and your code should still work.
+-   **Reproducibility criteria**: You should be able to delete the csv file, and remake it simply by knitting this Rmd file.
+
+<!-------------------------- Start your work below ---------------------------->
+```{r}
+getwd()
+write.csv(q1, "/Users/zoe/mda-ZoeZHH/output/summary_building_year_vs_air_conditioning.csv")
+```
+
+<!----------------------------------------------------------------------------->
+
+## 4.2 (3 points)
+
+Write your model object from Task 3 to an R binary file (an RDS), and load it again. Be sure to save the binary file in your `output` folder. Use the functions `saveRDS()` and `readRDS()`.
+
+-   The same robustness and reproducibility criteria as in 4.1 apply here.
+
+<!-------------------------- Start your work below ---------------------------->
+```{r}
+# Save the model to an RDS file
+saveRDS(model1, file = here("/Users/zoe/mda-ZoeZHH/output", "model1.rds"))
+# Read the model from the RDS file
+loaded_model <- readRDS(here("/Users/zoe/mda-ZoeZHH/output", "model1.rds"))
+```
+<!----------------------------------------------------------------------------->
+
+# Overall Reproducibility/Cleanliness/Coherence Checklist 
+
+Here are the criteria we're looking for.
+
+## Coherence (0.5 points)
+
+The document should read sensibly from top to bottom, with no major continuity errors. 
+
+The README file should still satisfy the criteria from the last milestone, i.e. it has been updated to match the changes to the repository made in this milestone. 
+
+## File and folder structure (1 points)
+
+You should have at least three folders in the top level of your repository: one for each milestone, and one output folder. If there are any other folders, these are explained in the main README.
+
+Each milestone document is contained in its respective folder, and nowhere else.
+
+Every level-1 folder (that is, the ones stored in the top level, like "Milestone1" and "output") has a `README` file, explaining in a sentence or two what is in the folder, in plain language (it's enough to say something like "This folder contains the source for Milestone 1").
+
+## Output (1 point)
+
+All output is recent and relevant:
+
+-   All Rmd files have been `knit`ted to their output md files. 
+-   All knitted md files are viewable without errors on Github. Examples of errors: Missing plots, "Sorry about that, but we can't show files that are this big right now" messages, error messages from broken R code
+-   All of these output files are up-to-date -- that is, they haven't fallen behind after the source (Rmd) files have been updated.
+-   There should be no relic output files. For example, if you were knitting an Rmd to html, but then changed the output to be only a markdown file, then the html file is a relic and should be deleted.
+
+Our recommendation: delete all output files, and re-knit each milestone's Rmd file, so that everything is up to date and relevant.
+
+## Tagged release (0.5 point)
+
+You've tagged a release for Milestone 2. 
+
+### Attribution
+
+Thanks to Victor Yuan for mostly putting this together.

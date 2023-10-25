@@ -1,0 +1,4 @@
+"0","# The large bin, bin 3 is the most suitable 1 for this question, because it's easily see that most of apartments in Vancouver has units number less than 50! Too small bin makes it hard to track the range."
+"0",""
+"0","# Comments on summarizing: by giving min/min/mean/median/sd values of no of units, we get the idea of the general information, distribution on no of units in Vancouver."
+"0","# Comments on graphing: Histograms provide us the distribution of different ranges of no of units, with most apartments have no_of_units smaller than 50. The graphing do answer the research question clearly."

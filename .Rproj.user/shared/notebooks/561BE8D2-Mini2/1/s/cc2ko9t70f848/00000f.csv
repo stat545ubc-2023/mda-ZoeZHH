@@ -1,0 +1,7 @@
+"0","# Before: tidy the dataset to answer: How many of each property type were built each year?"
+"0","property_count_by_year <- apt_subset %>%"
+"0","  group_by(year_built, property_type) %>%"
+"0","  summarise(count = n()) %>%"
+"0","  pivot_wider(names_from = property_type, values_from = count, values_fill = 0)"
+"2","`summarise()` has grouped output by 'year_built'. You can override using the `.groups` argument."
+"0","print(property_count_by_year)"

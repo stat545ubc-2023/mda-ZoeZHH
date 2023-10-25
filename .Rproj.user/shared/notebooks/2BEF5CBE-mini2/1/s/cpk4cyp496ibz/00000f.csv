@@ -1,0 +1,8 @@
+"0","data_q1 <- apt_subset %>%"
+"0","  select(year_built, property_type) %>%  "
+"0","  group_by(year_built, property_type) %>%  "
+"0","  summarise(count = n()) %>% "
+"0","  pivot_wider(names_from = property_type, values_from = count, values_fill = 0) %>% "
+"0","  arrange(year_built) "
+"2","`summarise()` has grouped output by 'year_built'. You can override using the `.groups` argument."
+"0","print(data_q1)"

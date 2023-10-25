@@ -1,0 +1,8 @@
+"0","data_q2 <- apt_subset %>%"
+"0","  select(no_of_units, no_of_storeys, property_type) %>%  "
+"0","  filter(property_type %in% c(""PRIVATE"", ""SOCIAL HOUSING"")) %>% "
+"0","  mutate(average_units_per_storey = no_of_units / no_of_storeys) %>% "
+"0","  filter(between(no_of_units, 5, 500), "
+"0","         between(no_of_storeys, 1, 50)) %>%  "
+"0","  arrange(desc(average_units_per_storey)) "
+"0","print(data_q2)"

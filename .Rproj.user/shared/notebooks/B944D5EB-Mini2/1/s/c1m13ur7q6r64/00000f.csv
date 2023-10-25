@@ -1,0 +1,4 @@
+"0","# Save the model to an RDS file"
+"0","saveRDS(model1, file = here(""/Users/zoe/mda-ZoeZHH/output"", ""model1.rds""))"
+"0","# Read the model from the RDS file"
+"0","loaded_model <- readRDS(here(""/Users/zoe/mda-ZoeZHH/output"", ""model1.rds""))"

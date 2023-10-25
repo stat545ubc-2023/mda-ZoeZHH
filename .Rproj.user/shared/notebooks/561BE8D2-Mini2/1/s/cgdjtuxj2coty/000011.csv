@@ -1,0 +1,8 @@
+"0","# Option 8: Create a graph that has at least two geom layers."
+"0","ggplot(q3, aes(x = year_built, y = count, fill = property_type)) +"
+"0","  geom_bar(stat = ""identity"", position = ""dodge"") +"
+"0","  geom_line(aes(group = property_type, color = property_type), size = 1) +"
+"0","  labs(title = ""Number of Each Property Type Built Each Year"","
+"0","       x = ""Year Built"","
+"0","       y = ""Number of Properties"") +"
+"0","  theme_minimal()"

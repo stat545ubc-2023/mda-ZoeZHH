@@ -1,0 +1,50 @@
+"0","glimpse(apt_buildings)"
+"1","Rows: 3,454"
+"1",""
+"1","
+"
+"1","Columns: 37"
+"1",""
+"1","
+"
+"1","$ id                               [3m[38;5;246m<dbl>[39m[23m 10359, 10360, 10361, 10362, 10363, 10364, 1…
+$ air_conditioning                 [3m[38;5;246m<chr>[39m[23m ""NONE"", ""NONE"", ""NONE"", ""NONE"", ""NONE"", ""NO…
+$ amenities                        [3m[38;5;246m<chr>[39m[23m ""Outdoor rec facilities"", ""Outdoor pool"", N…
+$ balconies                        [3m[38;5;246m<chr>[39m[23m ""YES"", ""YES"", ""YES"", ""YES"", ""NO"", ""NO"", ""NO…
+$ barrier_free_accessibilty_entr   [3m[38;5;246m<chr>[39m[23m ""YES"", ""NO"", ""NO"", ""YES"", ""NO"", ""NO"", ""YES""…
+$ bike_parking                     [3m[38;5;246m<chr>[39m[23m ""0 indoor parking spots and 10 outdoor park…
+$ exterior_fire_escape             [3m[38;5;246m<chr>[39m[23m ""NO"", ""NO"", ""NO"", ""YES"", ""NO"", NA, ""NO"", ""N…
+$ fire_alarm                       [3m[38;5;246m<chr>[39m[23m ""YES"", ""YES"", ""YES"", ""YES"", ""YES"", ""YES"", ""…
+$ garbage_chutes                   [3m[38;5;246m<chr>[39m[23m ""YES"", ""YES"", ""NO"", ""NO"", ""NO"", ""NO"", ""NO"",…
+$ heating_type                     [3m[38;5;246m<chr>[39m[23m ""HOT WATER"", ""HOT WATER"", ""HOT WATER"", ""HOT…
+$ intercom                         [3m[38;5;246m<chr>[39m[23m ""YES"", ""YES"", ""YES"", ""YES"", ""YES"", ""YES"", ""…
+$ laundry_room                     [3m[38;5;246m<chr>[39m[23m ""YES"", ""YES"", ""YES"", ""YES"", ""YES"", ""YES"", ""…
+$ locker_or_storage_room           [3m[38;5;246m<chr>[39m[23m ""NO"", ""YES"", ""YES"", ""YES"", ""NO"", ""YES"", ""YE…
+$ no_of_elevators                  [3m[38;5;246m<dbl>[39m[23m 3, 3, 0, 1, 0, 0, 0, 2, 4, 2, 0, 2, 2, 1, 2…
+$ parking_type                     [3m[38;5;246m<chr>[39m[23m ""Underground Garage , Garage accessible thr…
+$ pets_allowed                     [3m[38;5;246m<chr>[39m[23m ""YES"", ""YES"", ""YES"", ""YES"", ""YES"", ""YES"", ""…
+$ prop_management_company_name     [3m[38;5;246m<chr>[39m[23m NA, ""SCHICKEDANZ BROS. PROPERTIES"", NA, ""FR…
+$ property_type                    [3m[38;5;246m<chr>[39m[23m ""PRIVATE"", ""PRIVATE"", ""PRIVATE"", ""PRIVATE"",…
+$ rsn                              [3m[38;5;246m<dbl>[39m[23m 4154812, 4154815, 4155295, 4155309, 4155318…
+$ separate_gas_meters              [3m[38;5;246m<chr>[39m[23m ""NO"", ""NO"", ""NO"", ""NO"", ""NO"", ""NO"", ""NO"", ""…
+$ separate_hydro_meters            [3m[38;5;246m<chr>[39m[23m ""YES"", ""YES"", ""YES"", ""YES"", ""YES"", ""YES"", ""…
+$ separate_water_meters            [3m[38;5;246m<chr>[39m[23m ""NO"", ""NO"", ""NO"", ""NO"", ""NO"", ""NO"", ""NO"", ""…
+$ site_address                     [3m[38;5;246m<chr>[39m[23m ""65  FOREST MANOR RD"", ""70  CLIPPER RD"", ""2…
+$ sprinkler_system                 [3m[38;5;246m<chr>[39m[23m ""YES"", ""YES"", ""NO"", ""YES"", ""NO"", ""NO"", ""NO""…
+$ visitor_parking                  [3m[38;5;246m<chr>[39m[23m ""PAID"", ""FREE"", ""UNAVAILABLE"", ""UNAVAILABLE…
+$ ward                             [3m[38;5;246m<chr>[39m[23m ""17"", ""17"", ""03"", ""03"", ""02"", ""02"", ""02"", ""…
+$ window_type                      [3m[38;5;246m<chr>[39m[23m ""DOUBLE PANE"", ""DOUBLE PANE"", ""DOUBLE PANE""…
+$ year_built                       [3m[38;5;246m<dbl>[39m[23m 1967, 1970, 1927, 1959, 1943, 1952, 1959, 1…
+$ year_registered                  [3m[38;5;246m<dbl>[39m[23m 2017, 2017, 2017, 2017, 2017, NA, 2017, 201…
+$ no_of_storeys                    [3m[38;5;246m<dbl>[39m[23m 17, 14, 4, 5, 4, 4, 4, 7, 32, 4, 4, 7, 5, 6…
+$ emergency_power                  [3m[38;5;246m<chr>[39m[23m ""NO"", ""YES"", ""NO"", ""NO"", ""NO"", ""NO"", ""NO"", …
+$ `non-smoking_building`           [3m[38;5;246m<chr>[39m[23m ""YES"", ""NO"", ""YES"", ""YES"", ""YES"", ""NO"", ""NO…
+$ no_of_units                      [3m[38;5;246m<dbl>[39m[23m 218, 206, 34, 42, 25, 34, 14, 105, 571, 171…
+$ no_of_accessible_parking_spaces  [3m[38;5;246m<dbl>[39m[23m 8, 10, 20, 42, 12, 0, 5, 1, 1, 6, 12, 0, 1,…
+$ facilities_available             [3m[38;5;246m<chr>[39m[23m ""Recycling bins"", ""Green Bin / Organics"", ""…
+$ cooling_room                     [3m[38;5;246m<chr>[39m[23m ""NO"", ""NO"", ""NO"", ""NO"", ""NO"", ""NO"", ""NO"", ""…
+$ no_barrier_free_accessible_units [3m[38;5;246m<dbl>[39m[23m 2, 0, 0, 42, 0, NA, 14, 0, 0, 1, 25, 0, 0, …"
+"1",""
+"1","
+"
+"0","head(apt_buildings)"
