@@ -1,4 +1,4 @@
-# mda-project-template
+# STAT 545A MINI DATA ANALYSIS PROJECT - HEHAN (ZOE) ZHANG
 
 This repository is for Zoe Zhang's mini-data analysis project. My project is looking at the data on apartment buildings, aiming to find the relationships between built years, number of units, storeys and property types.
 
