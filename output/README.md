@@ -1,1 +1,1 @@
-
+output file with files required from Task 4 in Milestone 2, contains a .csv file (summary_building_year_vs_air_conditioning.csv) of one of the summarized tables in Milestone 2 that summarize apartment built year in different eras, with a linear regression model saved as an .rds file (model1.rds).
