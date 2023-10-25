@@ -2,7 +2,7 @@
 
 This repository is for Zoe Zhang's mini-data analysis project. My project is looking at the data on apartment buildings, aiming to find the relationships between built years, number of units, storeys and property types.
 
-There are three folders in this repository: Milestone 1, Milestone 2, and output
+There are three folders in this repository (Milestone 1, Milestone 2, and output): 
 
 Milestone 1: contains the.Rmd and .md files for milestone 1, mini-data analysis project.
 
